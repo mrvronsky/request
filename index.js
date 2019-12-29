@@ -1,3 +1,4 @@
+const querystring = require('querystring')
 function request({url, options, httpModule}) {
   let args = url == null ? [options] : [url,options]
   return new Promise((resolve, reject) => {
@@ -10,9 +11,14 @@ function request({url, options, httpModule}) {
     request.end()
   })
 }
- 
+
+function constructPath ({endpoint, query}) { 
+  return query ? `${endpoint}?${querystring.stringify(query)}` : endpoint
+}
+
 module.exports = { 
-  request
+  request,
+  constructPath
 }
 
 //async function test() { 
